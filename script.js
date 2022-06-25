@@ -98,16 +98,15 @@ const gameController = (() => {
             turn = true;
             player.makeMove(data);
             section.innerHTML = player.getMarker();
-            checkWinner(playerO)
             checkWinner(playerX)
             if(game === true){
                 computerBrain();
+                checkWinner(playerO)
             }
             
             
         }
-        checkWinner(playerO)
-        checkWinner(playerX)
+        
         
      
     };
