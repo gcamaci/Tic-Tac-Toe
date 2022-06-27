@@ -4,13 +4,13 @@
 const gameBoard = (() => {
     const board = document.getElementById('game-board');
     let boardArray = ["","","","","","","","",""];
-    
-    for (let i = 0; i <= boardArray.length; i++){
+    for (let i = 0; i < boardArray.length; i++){
         const boardSection = document.createElement('div');
         boardSection.classList.add('board-section');
         boardSection.dataset.place = i;
         board.appendChild(boardSection);
     }
+
     
     return{boardArray}
 
@@ -32,22 +32,40 @@ const Player = (marker) => {
 const gameController = (() => {
     const winningNums = [[0,4,8],[0,1,2],[0,3,6],[1,4,7],[2,4,6],[2,5,8],[3,4,5],[6,7,8]];
     const reset = document.getElementById('reset');
+    const start = document.getElementById('start-game');
+    const tag = document.getElementById('tag');
     let turn = true;
     let game =true;
     const boardSections = document.querySelectorAll('.board-section');
-    const playerX = Player('x');
-    const playerO = Player('o');
-    let opp = 'computer';
+    const playerX = Player('X');
+    const playerO = Player('O');
+    let opp = 'player';
 
+
+    const toggleOpp = (enemy) => {
+        const playerOpp = document.querySelector('.opp-player');
+        const compOpp = document.querySelector('.opp-computer');
+    
+        if(enemy === 'player'){
+            opp = 'player';
+            playerOpp.style.backgroundColor = 'var(--header-hover)'
+            compOpp.style.backgroundColor =  'var(--color-secondary-bkg)'
+        }else{
+            opp = 'computer';
+            playerOpp.style.backgroundColor = 'var(--color-secondary-bkg)'
+            compOpp.style.backgroundColor = 'var(--header-hover)'
+        }
+        
+
+    };
     //decides whos turn it is. 
     const playerTurn = () => {
-        if(turn){
-            
-            return playerX
+       if(turn){
+        return playerX
         }else{
             
-            return playerO;
-        }
+        return playerO;
+        } 
     };
 
     const computerBrain = () =>{
@@ -67,14 +85,17 @@ const gameController = (() => {
     const checkWinner = (player) => {
         if(gameBoard.boardArray.indexOf('') === -1){
             console.log('TIE')
+            tag.innerHTML = 'TIE!'
         }
         winningNums.forEach((show)=>{
             if(gameBoard.boardArray[show[0]] === player.getMarker() 
             && gameBoard.boardArray[show[1]] ===player.getMarker() 
-            && gameBoard.boardArray[show[2]] === player.getMarker() ){
+            && gameBoard.boardArray[show[2]] === player.getMarker()){
             console.log(`these match ${show}`)
             console.log(`Player: ${player.getMarker()} wins!!!`)
             game = false;
+            
+            tag.innerHTML = `Player: ${player.getMarker()} wins!!!`
             }
         }); 
 
@@ -85,12 +106,24 @@ const gameController = (() => {
     const playRound = (section) => {
         let player = gameController.playerTurn();
         const data = parseInt(section.dataset.place); 
-       
+        
         if(game === true && opp === 'player'){
             if(gameBoard.boardArray[data] !== "") return
             turn = !turn;
             player.makeMove(data);
-            section.innerHTML = player.getMarker(); 
+            section.innerHTML = player.getMarker();
+            if(player.getMarker()==='X'){
+                tag.innerHTML = "Player O's Turn";
+                section.style.color = 'var(--header-hover)'
+               
+            }
+            else{
+                tag.innerHTML = "Player X's Turn";
+                section.style.color = 'var(--second-hover)'
+                
+            }
+            checkWinner(playerX)
+            checkWinner(playerO)
         }
 
         if(game === true && opp === 'computer'){
@@ -98,43 +131,57 @@ const gameController = (() => {
             turn = true;
             player.makeMove(data);
             section.innerHTML = player.getMarker();
+            
             checkWinner(playerX)
             if(game === true){
                 computerBrain();
                 checkWinner(playerO)
             }
-            
-            
+ 
         }
-        
-        
-     
+
     };
-    
+
     const resetGame = () => {
         gameBoard.boardArray = ["","","","","","","","",""];
         game = true;
+        turn = true;
         boardSections.forEach((section) => {
             section.innerHTML = "";
         });
+        tag.innerHTML = "Player X's Turn"
         console.log(game)
         console.log(gameBoard.boardArray)
-
+        
     };
 
-
-    reset.addEventListener('click',resetGame)
+    reset.addEventListener('click',resetGame);
 
 
     boardSections.forEach((section) => {
         section.addEventListener('click',() => {
             playRound(section);
+        
+            
             
 
         });
     });
+
+    const opps = document.querySelectorAll('.opp');
+    opps.forEach((opponent) => {
+        opponent.addEventListener('click',() =>{
+            toggleOpp(opponent.dataset.opp)
+        });
+        
+    });
+
+    start.addEventListener('click', () =>{
+        const header = document.querySelector('header');
+        header.style.display = "none";
+    });
     
-    return {turn,playerTurn,computerBrain}
+    return {opp,turn,playerTurn,computerBrain}
 
 })();
 

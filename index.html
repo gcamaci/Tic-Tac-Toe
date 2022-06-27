@@ -4,15 +4,57 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="http://fonts.cdnfonts.com/css/dispence" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
     
     <title>Document</title>
 </head>
 <body>
-    <div id="game-board">
+
+    <header>
+        <div class="drop-container">
+            <h1 class="drop-header">Tic-Tac-Toe</h1>
+        </div>
+        
+        <div class="opp-wrapper">
+            <h2>Choose Your OpponenT</h2>
+            <div class="opps-container">
+                <div class="opp opp-player" data-opp = "player">Player</div>
+                <div class="opp opp-computer" data-opp="computer">Computer</div>
+            </div>
+            <div>
+                <button type="button" id = "start-game">Start Game</button>
+            </div>
+            <div class="floating floating-one">X</div>
+            <div class="floating floating-two">O</div>
+            <div class="floating floating-three">O</div>
+            <div class="floating floating-four">X</div>
+            <div class="floating floating-five">O</div>
+            <div class="floating floating-six">X</div>
+            
+
+        </div>
+        
+        
+    </header>
+    <main>
+        <div class="floating floating-one">X</div>
+        <div class="floating floating-two">O</div>
+        <div class="floating floating-three">O</div>
+        <div class="floating floating-four">X</div>
+        <div class="floating floating-five">O</div>
+        <div class="floating floating-six">X</div>
+        
+       
+        <h1>Tic-Tac-Toe</h1>
+        <p id="tag">Player X's Turn</p>
+        
+        <div id="game-board"></div>
+        <button type="button" id="reset">Reset</button>
+    </main>
     
-    </div>
-    <button type="button" id="reset">Reset</button>
+    
+ 
 
     <script src="script.js"></script>
 </body>
