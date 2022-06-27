@@ -134,7 +134,8 @@ const gameController = (() => {
             
             checkWinner(playerX)
             if(game === true){
-                computerBrain();
+                setTimeout(computerBrain,1000);
+                // computerBrain();
                 checkWinner(playerO)
             }
  
