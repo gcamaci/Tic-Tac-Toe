@@ -83,6 +83,8 @@ main h1{
 
 #tag{
     font-size: 2rem;
+    color: var(--second-hover);
+    z-index: 1;
    
 }
 .opp-wrapper{
@@ -115,7 +117,7 @@ main h1{
     height: 200px;
     background-color: var(--color-secondary-bkg);
     border-radius: 15px;
-    box-shadow:var(--box-shadows);
+    
     transition: all 0.3s ease;
     transform: scale(1);
     padding: 5px;
@@ -133,10 +135,12 @@ main h1{
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    box-shadow:0 0 5px 2px var(--second-hover);
 
 }
 .opp-player:hover{
     background-color:var(--second-hover);
+
     
 }
 .opp-computer{
@@ -144,6 +148,7 @@ main h1{
     background-position: bottom;
     background-repeat: no-repeat;
     background-size: contain;
+    box-shadow:0 0 5px 2px var(--header-hover);
     
 }
 #start-game{
@@ -185,13 +190,15 @@ main h1{
     background-color: var(--color-secondary-bkg);
     box-shadow: var(--box-shadows);
     font-size:100px;
+    text-shadow: 0 0 5px;;
 
     
 }
+/*
 .board-section:hover{
-    background-color: var(--header-hover);
+    border: 1px solid var(--header-hover);
     
-}
+} */
 .purple{
     color: var(--header-hover);
 }
@@ -223,7 +230,6 @@ main h1{
     animation-duration: 30s;
     animation-iteration-count: infinite;
     animation-timing-function: ease-in-out;
-    
     color: var(--second-hover);
 }
 
@@ -236,7 +242,6 @@ main h1{
     animation-duration: 20s;
     animation-iteration-count: infinite;
     animation-timing-function: ease-in-out;
-    
     color: var(--second-hover);
 }
 
@@ -262,7 +267,6 @@ main h1{
     animation-duration: 40s;
     animation-iteration-count: infinite;
     animation-timing-function: ease-in-out;
-    
     color: var(--second-hover);
 }
 

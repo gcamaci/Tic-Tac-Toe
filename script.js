@@ -41,7 +41,6 @@ const gameController = (() => {
     const playerO = Player('O');
     let opp = 'player';
 
-
     const toggleOpp = (enemy) => {
         const playerOpp = document.querySelector('.opp-player');
         const compOpp = document.querySelector('.opp-computer');
@@ -63,7 +62,6 @@ const gameController = (() => {
        if(turn){
         return playerX
         }else{
-            
         return playerO;
         } 
     };
@@ -78,25 +76,33 @@ const gameController = (() => {
         let random = Math.floor(Math.random() * compChoices.length);
         if(gameBoard.boardArray[compChoices[random]]===''){
             playerO.makeMove(compChoices[random]);
-            boardSections[compChoices[random]].innerHTML = playerO.getMarker();  
+            boardSections[compChoices[random]].innerHTML = playerO.getMarker();
+            boardSections[compChoices[random]].style.color = 'var(--second-hover)'
             
         }
     }
+    
     const checkWinner = (player) => {
-        if(gameBoard.boardArray.indexOf('') === -1){
+        
+        if(gameBoard.boardArray.indexOf('') === -1 && game === true){
             console.log('TIE')
             tag.innerHTML = 'TIE!'
+           
         }
         winningNums.forEach((show)=>{
             if(gameBoard.boardArray[show[0]] === player.getMarker() 
             && gameBoard.boardArray[show[1]] ===player.getMarker() 
             && gameBoard.boardArray[show[2]] === player.getMarker()){
-            console.log(`these match ${show}`)
-            console.log(`Player: ${player.getMarker()} wins!!!`)
-            game = false;
-            
-            tag.innerHTML = `Player: ${player.getMarker()} wins!!!`
+           
+                game = false;
+
+                boardSections[show[0]].style.backgroundColor = 'pink';
+                boardSections[show[1]].style.backgroundColor = 'pink';
+                boardSections[show[2]].style.backgroundColor = 'pink';
+                tag.innerHTML = `Player: ${player.getMarker()} wins!!!`
             }
+            
+           
         }); 
 
     };
@@ -114,13 +120,11 @@ const gameController = (() => {
             section.innerHTML = player.getMarker();
             if(player.getMarker()==='X'){
                 tag.innerHTML = "Player O's Turn";
-                section.style.color = 'var(--header-hover)'
-               
+                section.style.color = 'var(--header-hover)'   
             }
             else{
                 tag.innerHTML = "Player X's Turn";
                 section.style.color = 'var(--second-hover)'
-                
             }
             checkWinner(playerX)
             checkWinner(playerO)
@@ -131,6 +135,7 @@ const gameController = (() => {
             turn = true;
             player.makeMove(data);
             section.innerHTML = player.getMarker();
+            section.style.color = 'var(--header-hover)';
             
             checkWinner(playerX)
             if(game === true){
@@ -138,9 +143,7 @@ const gameController = (() => {
                 // computerBrain();
                 checkWinner(playerO)
             }
- 
         }
-
     };
 
     const resetGame = () => {
@@ -149,6 +152,7 @@ const gameController = (() => {
         turn = true;
         boardSections.forEach((section) => {
             section.innerHTML = "";
+            section.style.backgroundColor = 'var(--color-secondary-bkg)'
         });
         tag.innerHTML = "Player X's Turn"
         console.log(game)
@@ -162,11 +166,20 @@ const gameController = (() => {
     boardSections.forEach((section) => {
         section.addEventListener('click',() => {
             playRound(section);
-        
-            
-            
+        });
+        section.addEventListener('mouseover',()=>{
+            if(turn){
+                section.style.border = '3px solid var(--header-hover)';
+            }
+            else{
+                section.style.border = '3px solid var(--second-hover)';
+            }
+        });
+        section.addEventListener('mouseout', ()=>{
+            section.style.border = 'none'
 
         });
+        
     });
 
     const opps = document.querySelectorAll('.opp');
@@ -176,6 +189,8 @@ const gameController = (() => {
         });
         
     });
+
+    
 
     start.addEventListener('click', () =>{
         const header = document.querySelector('header');
